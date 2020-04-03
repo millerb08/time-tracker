@@ -41,7 +41,7 @@ function add_project($title,$category){
 
 function add_task($project_id,$title,$date,$time){
   include "connection.php";
-  $sql = "INSERT INTO trasks(project_id, title, date, time) VALUES(?,?,?,?)";
+  $sql = "INSERT INTO tasks(project_id, title, date, time) VALUES(?,?,?,?)";
   try{
     $results = $db->prepare($sql);
     $results->bindValue(1,$project_id,PDO::PARAM_INT);
