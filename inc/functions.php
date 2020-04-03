@@ -11,17 +11,23 @@ function get_project_list(){
   }
 }
 
-function get_task_list(){
+function get_task_list($filter = NULL){
   include "connection.php";
   
   $sql = "SELECT tasks.*, projects.title as project FROM tasks JOIN projects ON tasks.project_id = projects.project_id";
+  $orderBy = " ORDER BY date DESC";
+  if($filter){
+    $orderBy = " ORDER BY projects.title ASC, date DESC";
+  }
   
   try{
-  return $db->query($sql);
+    $results = $db->prepare($sql.$orderBy);
+    $results->execute();
   }catch (Exception $e){
     echo "Error: ".$e->getMessage() ."</br>";
     return array();
   }
+  return $results->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function add_project($title,$category){
