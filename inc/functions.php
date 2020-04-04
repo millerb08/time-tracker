@@ -104,7 +104,7 @@ function get_task($task_id){
 
 function delete_task($task_id){
   include "connection.php";
-  $sql = "SELECT task_id, title, date, time, project_id FROM tasks WHERE project_id = ?";
+  $sql = "DELETE FROM tasks WHERE task_id = ?";
   try{
     $results = $db->prepare($sql);
     $results->bindValue(1,$task_id,PDO::PARAM_INT);
@@ -113,7 +113,7 @@ function delete_task($task_id){
     echo "Error:".$e->getMessage()."<br/>";
     return false;
   }
-  return $results->fetch();
+  return true;
 }
 
 function add_task($project_id,$title,$date,$time,$task_id=NULL){
